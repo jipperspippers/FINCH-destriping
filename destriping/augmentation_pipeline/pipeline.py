@@ -8,8 +8,8 @@ import json
 sys.path.append("..")
 from data.loader import HyperSpectralCube, AugmentedDataset
 from apply_stripes import add_stripes
-# from augmentation_pipeline.cutmix_mixup import generate_augmented_images, visualize_augmentations, cutmix_augmentation, mixup_augmentation
-# import random
+from augmentation_pipeline.cutmix_mixup import generate_augmented_images, visualize_augmentations, cutmix_augmentation, mixup_augmentation
+import random
 import argparse
 
 def main(args):
@@ -56,13 +56,7 @@ if __name__ == "__main__":
     parser.add_argument("--mixup_images", type=int, default=15, help="Number of mixup images for AugmentedDataset.")
     parser.add_argument("--cutmix_images", type=int, default=15, help="Number of cutmix images for AugmentedDataset.")
     parser.add_argument("--output_directory", type=str, default="output_images", help="Directory to save augmented images.")
-
-    parser.add_argument("--striping_configs", type=str, default={},help="Configuration list of apply stripes from a text file")
-
-# cd C:\Users\hecto\Documents\GitHub\FINCH-destriping\destriping\augmentation_pipeline
-# python pipeline.py --hypercube_path ../../datasets/PaviaU.mat --striping_configs
-
-
+    parser.add_argument("--striping_configs", type=str, default={},help="Configuration list of apply stripes from a json/text file")
 
     args = parser.parse_args()
     main(args)
