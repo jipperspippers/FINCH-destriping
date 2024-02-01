@@ -31,6 +31,7 @@ def _check_configs(configs):
         pepper: float, the probability of pepper of pepper noise in the image
         max_clusters: int, the maximum amount of clusters defaulted at 10
         bit: int, the bit that the image is in defaulted at 16
+
     '''
     # Define default values
     default_values = {
@@ -41,6 +42,7 @@ def _check_configs(configs):
         'by_layers': True,
         'stripe_frequency': 0.5,
         'stripe_intensity': -1, 
+
         'salt':-1, 
         'pepper':-1, 
         'max_clusters': 10,
@@ -109,6 +111,7 @@ def _generate_numbers(target_sum, array_size):
     max_value = target_sum
     while len(random_numbers) < array_size:
         temp = np.random.uniform(0, max_value, 1)[0]
+
         if curr >= temp:
             random_numbers.append(temp)
             curr = curr - temp
@@ -130,6 +133,7 @@ def _choose_slices(data, i, col_lines, noise):
         fragment_sizes = _generate_numbers(data.shape[1]-1, num_fragments)
 
         fragment_starts = np.cumsum(fragment_sizes)
+
         fragment_starts = np.append(0, fragment_starts).astype('<u2')
         
 
@@ -141,8 +145,6 @@ def _choose_slices(data, i, col_lines, noise):
 
         # for each fragment add noise to it
 
-
-        # YOU CAN MAKE THIS FASTER
         for frag in frags:
             start = fragment_starts[frag]
 
@@ -158,6 +160,7 @@ def _choose_slices(data, i, col_lines, noise):
             # temp = data[start:end, col, i] # for debugging purpoess
             # temp = temp + noise[j]
             # data[start:end, col, i] = temp # for debugging purposes
+
     
     return data
 
@@ -216,6 +219,8 @@ def _select_lines(dims, configs):
     r: ratio of columns to select
     max_clusters: int
 
+
+
     returns:
     List of int, representing the lines to return
     """
@@ -225,6 +230,7 @@ def _select_lines(dims, configs):
     max_clusters = configs['max_clusters']
     clusters = configs['clusters']
     stripe_frequency = configs['stripe_frequency']
+
 
 
     # if there are clusters we would want to find areas to cluster these values
@@ -264,6 +270,7 @@ def _select_lines(dims, configs):
         num_lines =  int((dims[1])*stripe_frequency)
         cols_striped =np.round(np.random.uniform(0, dims[1]-1, num_lines - 1)).astype(np.int32)
 
+
     return cols_striped
 
 
@@ -287,6 +294,7 @@ def add_stripes(datacube, configs=None):
 
     # depending on the stripe types
     striped_data = _gaussian_stripe(striped_data ,configs)
+
 
 
     # add noise to the frame
